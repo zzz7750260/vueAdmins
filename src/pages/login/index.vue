@@ -1,7 +1,7 @@
 <template>
-	<div class="login">	
+	<div>	
 		<h3>{{theTitle}}</h3>
-		<div>
+		<div class="login">
 			<el-radio-group v-model="labelPosition" size="small">
 			  <el-radio-button label="left">左对齐</el-radio-button>
 			  <el-radio-button label="right">右对齐</el-radio-button>
@@ -43,5 +43,5 @@ export default{
 	.login{
 		width:380px;
 		margin:0 auto;
-	}	
+	}
 </style>

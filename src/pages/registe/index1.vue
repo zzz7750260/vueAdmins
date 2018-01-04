@@ -1,7 +1,9 @@
 <template>
 	<div>
-		<h3>这个是管理用户界面</h3>
-		<div class="registe">
+		<h3>
+			{{theTitle}}
+		</h3>
+		<div>
 			<el-form :model="refusteFormData" status-icon :rules="refusteRules" ref="registeForm" label-width="100px" class="demo-ruleForm">
 			  <el-form-item label="用户名" prop="name">
 				<el-input v-model="refusteFormData.name" auto-complete="on" placeholder="输入用户名"></el-input>
@@ -12,23 +14,18 @@
 			  <el-form-item label="确认密码" prop="checkPass">
 				<el-input type="password" v-model="refusteFormData.checkPass" auto-complete="off" placeholder="确认注册密码"></el-input>
 			  </el-form-item>
-			  <el-form-item label="QQ号码" prop="QQNum">
-				<el-input v-model.number="refusteFormData.qq" placeholder="输入QQ号码"></el-input>
+			  <el-form-item label="年龄" prop="age">
+				<el-input v-model.number="refusteFormData.age"></el-input>
 			  </el-form-item>
-			  <el-form-item label="电话号码" prop="TelNum">
-				<el-input v-model.number="refusteFormData.tel" placeholder="输入电话号码"></el-input>
-			  </el-form-item>
-			  <el-form-item label="电子邮箱" prop="email">
-				<el-input v-model.number="refusteFormData.email" placeholder="输入电子邮箱"></el-input>
-			  </el-form-item>				
 			  <el-form-item>
 				<el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
-				<el-button @click="resetForm('registeForm')">重置</el-button>
+				<el-button @click="resetForm('ruleForm2')">重置</el-button>
 			  </el-form-item>
 			</el-form>
 		</div>
 	</div>
 </template>
+
 <script>
 export default{
 	data(){
@@ -38,20 +35,13 @@ export default{
 				name: '',	
 				pass: '',
 				checkPass: '',
-				qq: '',
-				tel: '',
-				email: '',
+				age: ''	
 			},
 			refusteRules:{
-				name:[
-					{required:true, trigger:'blur',message:"输入正确用户名"},
-					{ min:6, max:15, trigger:'blur',message:"长度在6到15个字节"},
-				],
+				name:[{required:true, trigger:'blur',message:"输入正确用户名"}],
 				pass:[{required:true, trigger:'blur',message:"输入正确用户名"}],
 				checkPass:[{required:true, trigger:'blur',message:"输入正确用户名"}],
-				QQNum:[{required:true, trigger:'blur',message:"输入正确用户名"}],	
-				TelNum:[{required:true, trigger:'blur',message:"输入正确用户名"}],	
-				email:[{required:true, trigger:'blur',message:"输入正确用户名"}],					
+				age:[{required:true, trigger:'blur',message:"输入正确用户名"}],			
 			}
 		}
 	},
@@ -59,16 +49,9 @@ export default{
 		submitForm(formName) {
 		 },
 		resetForm(formName) {
-			this.$refs[formName].resetFields();
+		
 		}
 	}
 }
 
 </script>
-
-<style lang="less">
-	.registe{
-		width:380px;
-		margin:0px auto;
-	}
-</style>
