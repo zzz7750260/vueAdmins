@@ -22,7 +22,7 @@
 				<el-input v-model.number="refusteFormData.email" placeholder="输入电子邮箱"></el-input>
 			  </el-form-item>				
 			  <el-form-item>
-				<el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+				<el-button type="primary" @click="submitForm('registeForm')">提交</el-button>
 				<el-button @click="resetForm('registeForm')">重置</el-button>
 			  </el-form-item>
 			</el-form>
@@ -30,6 +30,7 @@
 	</div>
 </template>
 <script>
+import axios from 'axios'
 export default{
 	data(){
 		return{
@@ -49,14 +50,29 @@ export default{
 				],
 				pass:[{required:true, trigger:'blur',message:"输入正确用户名"}],
 				checkPass:[{required:true, trigger:'blur',message:"输入正确用户名"}],
-				QQNum:[{required:true, trigger:'blur',message:"输入正确用户名"}],	
-				TelNum:[{required:true, trigger:'blur',message:"输入正确用户名"}],	
-				email:[{required:true, trigger:'blur',message:"输入正确用户名"}],					
+				QQNum:[{type: 'number', required:false, trigger:'blur',message:"输入正确qq号码"}],	
+				TelNum:[{type: 'number', required:false, trigger:'blur',message:"输入正确电话号码"}],	
+				email:[{required:true, trigger:'blur',message:"输入正确邮箱地址"}],					
 			}
 		}
 	},
+	mounted(){
+		
+	},
 	methods:{
 		submitForm(formName) {
+			var params={
+				userName:this.refusteFormData.name,
+				userPass:this.refusteFormData.checkPass,
+				userQQ:this.refusteFormData.qq,
+				userTel:this.refusteFormData.tel,
+				userEmail:this.refusteFormData.email,
+				/*userJoinTime:0,*/
+				userRole:0
+			}
+			axios.post("./admin/registe",{params}).then((response)=>{
+				console.log(response);
+			})
 		 },
 		resetForm(formName) {
 			this.$refs[formName].resetFields();
