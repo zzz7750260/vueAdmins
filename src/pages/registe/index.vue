@@ -31,8 +31,20 @@
 </template>
 <script>
 import axios from 'axios'
+import {isvalidUsername} from '../../utils/validate'
+
 export default{
+	name:'registe',
 	data(){
+		const validateUsername =(rule, value, callback)=> {
+			if(!isvalidUsername(value)){
+				console.log(isvalidUsername(value))
+				callback(new Error('Please enter the correct user name'))
+			}
+			else{
+				callback()
+			}
+		}
 		return{
 			theTitle:"用户注册",
 			refusteFormData:{
@@ -45,7 +57,7 @@ export default{
 			},
 			refusteRules:{
 				name:[
-					{required:true, trigger:'blur',message:"输入正确用户名"},
+					{required:true, trigger:'blur',validator:validateUsername},
 					{ min:6, max:15, trigger:'blur',message:"长度在6到15个字节"},
 				],
 				pass:[{required:true, trigger:'blur',message:"输入正确用户名"}],
