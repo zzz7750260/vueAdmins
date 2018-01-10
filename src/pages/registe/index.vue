@@ -20,7 +20,10 @@
 			  </el-form-item>
 			  <el-form-item label="电子邮箱" prop="email">
 				<el-input v-model.number="refusteFormData.email" placeholder="输入电子邮箱"></el-input>
-			  </el-form-item>				
+			  </el-form-item>	
+			  <el-form-item label="年龄" prop="age">
+				<el-input v-model.number="refusteFormData.age" placeholder="请输入你的年龄"></el-input>
+			  </el-form-item>				  
 			  <el-form-item>
 				<el-button type="primary" @click="submitForm('registeForm')">提交</el-button>
 				<el-button @click="resetForm('registeForm')">重置</el-button>
@@ -45,6 +48,48 @@ export default{
 				callback()
 			}
 		}
+		const validatePassWord =(rule, value, callback)=> {
+			if(value.length < 6){
+				callback(new Error('密码不能少于6位数'))
+			}
+			else{
+				callback()
+			}
+		}
+		
+		const checkValidatePassWord =(rule, value, callback)=> {
+			if(value ===""){
+				callback(new Error('请再次输入密码'));
+			}
+			else if(value !== this.refusteFormData.pass){
+				callback(new Error('两次密码不一致'));
+			}
+			else{
+				callback()
+			}
+		}
+		
+		const validateAge =(rule, value, callback)=> {
+			if(!value){
+				callback(new Error('年龄不能为空'));
+			}
+			else{
+				setTimeout(() => {
+					if(!Number.isInteger(value)){
+						callback(new Error("必须输入整数"));
+					}
+					else{
+						if(value < 18){							
+							callback(new Error("年龄必须在18岁以上"));						
+						}
+						else{
+							callback();
+						}
+					}
+				},1000);
+			}
+		}
+		
 		return{
 			theTitle:"用户注册",
 			refusteFormData:{
@@ -54,17 +99,22 @@ export default{
 				qq: '',
 				tel: '',
 				email: '',
+				age:'',
 			},
 			refusteRules:{
 				name:[
 					{required:true, trigger:'blur',validator:validateUsername},
 					{ min:6, max:15, trigger:'blur',message:"长度在6到15个字节"},
 				],
-				pass:[{required:true, trigger:'blur',message:"输入正确用户名"}],
-				checkPass:[{required:true, trigger:'blur',message:"输入正确用户名"}],
+				pass:[{required:true, trigger:'blur',validator:validatePassWord}],
+				checkPass:[{required:true, trigger:'blur',validator:checkValidatePassWord}],
 				QQNum:[{type: 'number', required:false, trigger:'blur',message:"输入正确qq号码"}],	
 				TelNum:[{type: 'number', required:false, trigger:'blur',message:"输入正确电话号码"}],	
-				email:[{required:true, trigger:'blur',message:"输入正确邮箱地址"}],					
+				email:[{required:true, trigger:'blur',message:"输入正确邮箱地址"}],		
+				age:[
+					{type: 'number', required:true,trigger:'blur', message:"年龄必须为数字"},
+					{required:true,trigger:'blur', validator:validateAge},	
+				],
 			}
 		}
 	},
@@ -80,7 +130,8 @@ export default{
 				userTel:this.refusteFormData.tel,
 				userEmail:this.refusteFormData.email,
 				/*userJoinTime:0,*/
-				userRole:0
+				userRole:0,
+				userAge:this.refusteFormData.age,
 			}
 			axios.post("./admin/registe",{params}).then((response)=>{
 				console.log(response);
