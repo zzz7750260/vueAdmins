@@ -34,7 +34,7 @@
 </template>
 <script>
 import axios from 'axios'
-import {isvalidUsername} from '../../utils/validate'
+import {isvalidUsername,isvalidEmail,isvalidTel} from '../../utils/validate'
 
 export default{
 	name:'registe',
@@ -90,6 +90,31 @@ export default{
 			}
 		}
 		
+		const validateEmail =(rules, value, callback)=>{
+			console.log(value)
+			if(!isvalidEmail(value)){
+				callback(new Error('你输入的电子邮件地址不正确'))			
+			}
+			else{
+				callback()
+			}
+		
+		}
+		
+		const validateTel =(rules, value, callback)=>{
+			console.log("========这个是value=========")
+			console.log(value)
+			console.log("========这个是isvalidTel=========")
+			console.log(isvalidTel(value))			
+			if(!isvalidTel(value)){
+				console.log(value)
+				callback(new Error('请输入正确的电话号码'))
+			}
+			else{
+				callback();
+			}
+		}
+		
 		return{
 			theTitle:"用户注册",
 			refusteFormData:{
@@ -97,7 +122,7 @@ export default{
 				pass: '',
 				checkPass: '',
 				qq: '',
-				tel: '',
+				tel: null,
 				email: '',
 				age:'',
 			},
@@ -109,8 +134,11 @@ export default{
 				pass:[{required:true, trigger:'blur',validator:validatePassWord}],
 				checkPass:[{required:true, trigger:'blur',validator:checkValidatePassWord}],
 				QQNum:[{type: 'number', required:false, trigger:'blur',message:"输入正确qq号码"}],	
-				TelNum:[{type: 'number', required:false, trigger:'blur',message:"输入正确电话号码"}],	
-				email:[{required:true, trigger:'blur',message:"输入正确邮箱地址"}],		
+				TelNum:[
+					{type:'number', required:false, trigger:'blur',message:"必须为数字"},
+					{trigger:'blur',validator:validateTel},	
+				],	
+				email:[{required:true, trigger:'blur',validator:validateEmail}],		
 				age:[
 					{type: 'number', required:true,trigger:'blur', message:"年龄必须为数字"},
 					{required:true,trigger:'blur', validator:validateAge},	
