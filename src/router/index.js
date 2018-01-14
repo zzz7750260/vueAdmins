@@ -7,6 +7,9 @@ import RegisteLoad from '../pages/registeLoad'
 import Registe from '../pages/registe'
 import AdminHome from '../pages/adminHome'
 
+//这个是测试
+import Cs from '../pages/cs/registe_cs'
+
 Vue.use(Router)
 
 export default new Router({
@@ -35,6 +38,11 @@ export default new Router({
 		path: '/adminhome',
 		name: 'adminhome',
 		component: AdminHome,
+	},
+	{
+		path: '/cs',
+		name: 'cs',
+		component:Cs,
 	}
   ]
 })

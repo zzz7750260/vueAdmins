@@ -19,7 +19,7 @@
 				<el-input v-model.number="refusteFormData.tel" placeholder="输入电话号码"></el-input>
 			  </el-form-item>
 			  <el-form-item label="电子邮箱" prop="email">
-				<el-input v-model.number="refusteFormData.email" placeholder="输入电子邮箱"></el-input>
+				<el-input v-model="refusteFormData.email" placeholder="输入电子邮箱"></el-input>
 			  </el-form-item>	
 			  <el-form-item label="年龄" prop="age">
 				<el-input v-model.number="refusteFormData.age" placeholder="请输入你的年龄"></el-input>
@@ -134,9 +134,11 @@ export default{
 				pass:[{required:true, trigger:'blur',validator:validatePassWord}],
 				checkPass:[{required:true, trigger:'blur',validator:checkValidatePassWord}],
 				QQNum:[{type: 'number', required:false, trigger:'blur',message:"输入正确qq号码"}],	
-				TelNum:[
-					{type:'number', required:false, trigger:'blur',message:"必须为数字"},
-					{trigger:'blur',validator:validateTel},	
+				TelNum:[					
+					{ required: true, message: '不能为空'},
+					{ type: 'number', message: '年龄必须为数字值'}
+					
+					
 				],	
 				email:[{required:true, trigger:'blur',validator:validateEmail}],		
 				age:[
