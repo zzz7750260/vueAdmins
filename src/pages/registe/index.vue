@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h3>这个是管理用户界面</h3>
+		<h3>用户注册</h3>
 		<div class="registe">
 			<el-form :model="refusteFormData" status-icon :rules="refusteRules" ref="registeForm" label-width="100px" class="demo-ruleForm">
 			  <el-form-item label="用户名" prop="name">
@@ -13,10 +13,13 @@
 				<el-input type="password" v-model="refusteFormData.checkPass" auto-complete="off" placeholder="确认注册密码"></el-input>
 			  </el-form-item>
 			  <el-form-item label="QQ号码" prop="QQNum">
-				<el-input v-model.number="refusteFormData.qq" placeholder="输入QQ号码"></el-input>
+				<el-input v-model.number = "refusteFormData.QQNum" placeholder="输入你的QQ号码"></el-input>
 			  </el-form-item>
+			  
+			  <!--v-model.number的值必须和prop的值相同-->
+			  
 			  <el-form-item label="电话号码" prop="TelNum">
-				<el-input v-model.number="refusteFormData.tel" placeholder="输入电话号码"></el-input>
+				<el-input v-model.number="refusteFormData.TelNum" placeholder="输入电话号码"></el-input>
 			  </el-form-item>
 			  <el-form-item label="电子邮箱" prop="email">
 				<el-input v-model="refusteFormData.email" placeholder="输入电子邮箱"></el-input>
@@ -34,21 +37,30 @@
 </template>
 <script>
 import axios from 'axios'
-import {isvalidUsername,isvalidEmail,isvalidTel} from '../../utils/validate'
+import {isvalidUsername,isvalidEmail,isvalidTel,isTheNum} from '../../utils/validate'
 
 export default{
 	name:'registe',
 	data(){
-		const validateUsername =(rule, value, callback)=> {
+		var validateUsername =(rule, value, callback)=> {
 			if(!isvalidUsername(value)){
 				console.log(isvalidUsername(value))
-				callback(new Error('Please enter the correct user name'))
+				callback(new Error('用户名必须以字母开头'))
 			}
 			else{
-				callback()
+				var isCheck = this.userNameCheck(value)
+				console.log("是否存在"+isCheck);
+				console.log(isCheck);
+				if(isCheck){
+					callback()
+				}
+				else{
+					callback(new Error("该用户名已经存在"))
+				}
 			}
 		}
-		const validatePassWord =(rule, value, callback)=> {
+		
+		var validatePassWord =(rule, value, callback)=> {
 			if(value.length < 6){
 				callback(new Error('密码不能少于6位数'))
 			}
@@ -57,7 +69,7 @@ export default{
 			}
 		}
 		
-		const checkValidatePassWord =(rule, value, callback)=> {
+		var checkValidatePassWord =(rule, value, callback)=> {
 			if(value ===""){
 				callback(new Error('请再次输入密码'));
 			}
@@ -69,9 +81,48 @@ export default{
 			}
 		}
 		
-		const validateAge =(rule, value, callback)=> {
+		
+		var validateEmail =(rule, value, callback)=>{
+			console.log(value)
+			if(!isvalidEmail(value)){
+				callback(new Error('你输入的电子邮件地址不正确'))			
+			}
+			else{
+				callback()
+			}
+		
+		}
+		
+		var validateQQ = (rule, value, callback)=>{
+			console.log("qq号码返回"+value)
+			if(!isTheNum(value)){
+				callback(new Error('QQ号码必须为数字'))
+			}
+			else if(!Number.isInteger(value)){
+				callback(new Error("QQ号码必须为整数"));			
+			}
+			else{
+				callback()
+			}
+		}
+		
+		var validateTel =(rule, value, callback)=>{
+			console.log("========这个是value=========")
+			console.log(value)
+			console.log("========这个是isvalidTel=========")
+			console.log(isvalidTel(value))			
+			if(!isvalidTel(value)){
+				console.log(value)
+				callback(new Error('请输入正确的电话号码'))
+			}
+			else{
+				callback();
+			}
+		}
+		
+		var validateAge =(rule, value, callback)=> {
 			if(!value){
-				callback(new Error('年龄不能为空'));
+				callback(new Error('aaa年龄不能为空'));
 			}
 			else{
 				setTimeout(() => {
@@ -88,32 +139,8 @@ export default{
 					}
 				},1000);
 			}
-		}
+		}		
 		
-		const validateEmail =(rules, value, callback)=>{
-			console.log(value)
-			if(!isvalidEmail(value)){
-				callback(new Error('你输入的电子邮件地址不正确'))			
-			}
-			else{
-				callback()
-			}
-		
-		}
-		
-		const validateTel =(rules, value, callback)=>{
-			console.log("========这个是value=========")
-			console.log(value)
-			console.log("========这个是isvalidTel=========")
-			console.log(isvalidTel(value))			
-			if(!isvalidTel(value)){
-				console.log(value)
-				callback(new Error('请输入正确的电话号码'))
-			}
-			else{
-				callback();
-			}
-		}
 		
 		return{
 			theTitle:"用户注册",
@@ -121,8 +148,8 @@ export default{
 				name: '',	
 				pass: '',
 				checkPass: '',
-				qq: '',
-				tel: null,
+				QQNum: '',
+				TelNum: '',
 				email: '',
 				age:'',
 			},
@@ -133,17 +160,17 @@ export default{
 				],
 				pass:[{required:true, trigger:'blur',validator:validatePassWord}],
 				checkPass:[{required:true, trigger:'blur',validator:checkValidatePassWord}],
-				QQNum:[{type: 'number', required:false, trigger:'blur',message:"输入正确qq号码"}],	
-				TelNum:[					
-					{ required: true, message: '不能为空'},
-					{ type: 'number', message: '年龄必须为数字值'}
-					
-					
+				QQNum:[			
+					{trigger:'blur', validator:validateQQ,required:true},	
+				
 				],	
+				TelNum:[	
+					{trigger:'blur', validator:validateTel,required:true},				
+				],	
+				
 				email:[{required:true, trigger:'blur',validator:validateEmail}],		
-				age:[
-					{type: 'number', required:true,trigger:'blur', message:"年龄必须为数字"},
-					{required:true,trigger:'blur', validator:validateAge},	
+				age:[				
+					{trigger:'blur', validator:validateAge,required:true},	
 				],
 			}
 		}
@@ -153,23 +180,68 @@ export default{
 	},
 	methods:{
 		submitForm(formName) {
-			var params={
-				userName:this.refusteFormData.name,
-				userPass:this.refusteFormData.checkPass,
-				userQQ:this.refusteFormData.qq,
-				userTel:this.refusteFormData.tel,
-				userEmail:this.refusteFormData.email,
-				/*userJoinTime:0,*/
-				userRole:0,
-				userAge:this.refusteFormData.age,
-			}
-			axios.post("./admin/registe",{params}).then((response)=>{
-				console.log(response);
+			this.$refs[formName].validate((valid) => {
+				if(valid){
+					var params={
+						userName:this.refusteFormData.name,
+						userPass:this.refusteFormData.checkPass,
+						userQQ:this.refusteFormData.qq,
+						userTel:this.refusteFormData.tel,
+						userEmail:this.refusteFormData.email,
+						/*userJoinTime:0,*/
+						userRole:0,
+						userAge:this.refusteFormData.age,
+					}
+					axios.post("./admin/registe",{params}).then((response)=>{
+						console.log(response);
+						var res = response.data;
+						if(res.status == 0){
+							alert("注册成功");
+						}
+					})
+				}
+				else{
+					alert('注册失败');
+					return false;	
+				}				
 			})
 		 },
 		resetForm(formName) {
 			this.$refs[formName].resetFields();
-		}
+		},
+		//检测用户名是否存在
+		userNameCheck(val){
+			var isVal;
+			let _this = this;
+			var startCheck = function(){
+				return new Promise(function(resolve, reject){
+					resolve(					
+						axios.get("./admin/findUserName",{
+							params:{
+								userName:val
+							}
+						}).then((response)=>{			
+							console.log(response);
+							var res = response.data;
+							console.log("res.status:"+res.status)
+							if(res.status == "1"){
+								 _this.isVal = false;
+							}
+							else if(res.status == "2"){
+								 _this.isVal = true;					
+							}
+							console.log("isVal:"+_this.isVal);	
+							return _this.isVal
+						})
+					)					
+				})
+			}
+			var checkJg = async function(){
+				await startCheck();
+				console.log("外isVal:"+_this.isVal);	
+			}
+			checkJg();
+		}		
 	}
 }
 

@@ -4,12 +4,20 @@ export function isvalidUsername(str){
 	return 	UsernameRegex.test(str)
 }
 
+/*数字验证*/
+export function isTheNum(str){
+	const theNumRege = /^[0-9]*$/;
+	return theNumRege.test(str)	
+}
+
 /*邮箱验证*/
 export function isvalidEmail(str){
 	const theEmailRegex =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	console.log(theEmailRegex.test(str))
 	return theEmailRegex.test(str)
 }
+
+
 
 /*电话验证*/
 /**
