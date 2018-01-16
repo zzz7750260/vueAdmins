@@ -48,15 +48,36 @@ export default{
 				callback(new Error('用户名必须以字母开头'))
 			}
 			else{
-				var isCheck = this.userNameCheck(value)
-				console.log("是否存在"+isCheck);
-				console.log(isCheck);
-				if(isCheck){
-					callback()
-				}
-				else{
-					callback(new Error("该用户名已经存在"))
-				}
+				/*
+					var isCheck = this.userNameCheck(value)
+					console.log("是否存在"+isCheck);
+					console.log(isCheck);
+					if(isCheck){
+						callback()
+					}
+					else{
+						callback(new Error("该用户名已经存在"))
+					}
+				*/
+				
+				
+				var isVals;
+				axios.get("./admin/findUserName",{
+					params:{
+						userName:value
+					}
+				}).then((response)=>{
+					console.log(response);
+					var res = response.data;
+					if(res.status == "2"){
+						isVals = true;
+						callback()
+					}
+					else{
+						isVals = false;
+						callback(new Error("该用户名已经存在"))
+					}
+				})
 			}
 		}
 		
@@ -140,8 +161,7 @@ export default{
 				},1000);
 			}
 		}		
-		
-		
+				
 		return{
 			theTitle:"用户注册",
 			refusteFormData:{
@@ -209,9 +229,10 @@ export default{
 		resetForm(formName) {
 			this.$refs[formName].resetFields();
 		},
-		//检测用户名是否存在
+		
+		//检测用户名是否存在,但是占时
 		userNameCheck(val){
-			var isVal;
+			var isVal,isTrue;
 			let _this = this;
 			var startCheck = function(){
 				return new Promise(function(resolve, reject){
@@ -236,11 +257,15 @@ export default{
 					)					
 				})
 			}
+			
 			var checkJg = async function(){
 				await startCheck();
-				console.log("外isVal:"+_this.isVal);	
+				console.log("外isVal:" + _this.isVal);
+				//return isTrue = _this.isVal;
 			}
-			checkJg();
+			
+			checkJg();			
+			//console.log("最外isTrue："+ checkJg());									
 		}		
 	}
 }

@@ -18,7 +18,7 @@
 			</el-form>
 		</div>
 		<div>
-			<el-button>登录</el-button>
+			<el-button >登录</el-button>
 			<el-button>注册</el-button>
 		</div>
 	</div>
