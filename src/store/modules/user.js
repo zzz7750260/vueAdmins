@@ -1,4 +1,6 @@
-import {getToken,setToken,removeToken} from '../'
+import {getToken,setToken,removeToken} from '../../utils/auth'
+import {loginByUsername, logout, getUserInfo} from '../../api/login'
+
 const user = {
 	state:{
 		user:'',
@@ -71,3 +73,5 @@ const user = {
 		}		
 	}
 }
+
+export default user
