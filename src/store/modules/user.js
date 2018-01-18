@@ -1,5 +1,5 @@
 import {getToken,setToken,removeToken} from '../../utils/auth'
-import {loginByUsername, logout, getUserInfo} from '../../api/login'
+import {loginByUsername} from '../../api/login'
 
 const user = {
 	state:{
@@ -54,6 +54,7 @@ const user = {
 		},
 		
 		//获取用户信息
+		/*
 		GetUserInfo({ commit,state }){
 			return new Promise((resolve,reject)=>{
 				getUserInfo(state.token).then(response =>{
@@ -70,7 +71,8 @@ const user = {
 					reject(error)
 				})
 			})			
-		}		
+		}	
+		*/
 	}
 }
 
