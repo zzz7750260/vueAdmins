@@ -40,14 +40,18 @@ const user = {
 	actions:{
 		//用户登录
 		LoginByUsername({ commit },userInfo){
-			const usename = userInfo.username.trim()
+			console.log("===========输入的用户信息=============")
+			console.log(userInfo);
+			const username = userInfo.username.trim()
 			return new Promise((resolve, reject) =>{
 				loginByUsername(username, userInfo.password).then(response =>{
+					console.log("=============返回的信息==============")
+					console.log(response)
 					const data = response.data
 					commit('SET_TOKEN', data.token)
 					setToken(response.data.token);
 					resolve()
-				}).catch(err=>{
+				}).catch(error=>{
 					reject(error)
 				})
 			})			

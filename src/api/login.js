@@ -7,7 +7,7 @@ export function loginByUsername(username, password){
 	}
 	return request({
 		url: './admin/login',
-		method:'post',
-		data		
+		method:'get',
+		params:{ data }		
 	})
 }

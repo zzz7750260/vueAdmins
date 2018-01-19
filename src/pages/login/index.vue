@@ -18,8 +18,8 @@
 			</el-form>
 		</div>
 		<div>
-			<el-button >登录</el-button>
-			<el-button>注册</el-button>
+			<el-button v-on:click = "handleLogin('loginForm')">登录</el-button>
+			<router-link to="./registe"><el-button>注册</el-button></router-link>
 		</div>
 	</div>
 </template>
@@ -32,10 +32,18 @@ export default{
 			console.log(value)
 			if(!isvalidUsername(value)){
 				callback(new Error("用户名首位必须是字母"))
-			}		
+			}
+			else{
+				callback()
+			}
 		}
 		const validatePassword = (rule, value, callback)=>{
-			
+			if(value === ""){
+				callback(new Error("密码不能为空"));
+			}
+			else{
+				callback()
+			}
 		
 		}
 		
@@ -54,6 +62,22 @@ export default{
 					{required:true, trigger:"blur", validator:validatePassword }
 				]
 			}						
+		}
+	},
+	methods:{
+		handleLogin(formName){
+			 this.$refs[formName].validate((valid) =>{
+			  if (valid) {
+				this.$store.dispatch('LoginByUsername',this.loginFormData).then(()=>{
+					
+					this.$router.push({path:'/'})
+				})
+			  } 
+			  else {
+				console.log('登录错误');
+				return false;
+			  }
+			})
 		}
 	}
 }

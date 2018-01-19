@@ -11,7 +11,7 @@ const service = axios.create({
 //创建路由拦截器,为每个请求都付token
 service.interceptors.request.use(config => {
 	if(store.getters.token){
-		config.header['X-Token'] = getToken();//给每个请求添加token		
+		config.headers['X-Token'] = getToken();//给每个请求添加token		
 	}
 	return config
 	},
@@ -23,6 +23,11 @@ service.interceptors.request.use(config => {
 
 //数据接收拦截
 service.interceptors.response.use(
+	//response => {
+		//console.log("==============数据接收拦截===========");
+		//console.log(response);
+		//var res = response.data;
+	//},
 	response => response,
 	error => {
 		console.log('err'+error)

@@ -205,11 +205,11 @@ export default{
 					var params={
 						userName:this.refusteFormData.name,
 						userPass:this.refusteFormData.checkPass,
-						userQQ:this.refusteFormData.qq,
-						userTel:this.refusteFormData.tel,
+						userQQ:this.refusteFormData.QQNum,
+						userTel:this.refusteFormData.TelNum,
 						userEmail:this.refusteFormData.email,
 						/*userJoinTime:0,*/
-						userRole:0,
+						userRole:['user'],
 						userAge:this.refusteFormData.age,
 					}
 					axios.post("./admin/registe",{params}).then((response)=>{
