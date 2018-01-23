@@ -11,3 +11,12 @@ export function loginByUsername(username, password){
 		params:{ data }		
 	})
 }
+
+//根据token获取用户信息
+export function getUserInfo(token){
+	return request({
+		url:'./admin/info',
+		method:'get',
+		params:{ token }		
+	})	
+}

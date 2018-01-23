@@ -5,7 +5,7 @@ import NProgress from 'nprogress'  //引入NProgress
 import 'nprogress/nprogress.css'
 import { getToken } from './utils/auth' 
 
-NProgress.coufigure({ showSpinner:false })
+NProgress.configure({ showSpinner:false })
 
 function hasPermission(roles, permissionRoles){
 	if(roles.indexOf('admin')>=0) return true
@@ -13,7 +13,7 @@ function hasPermission(roles, permissionRoles){
 	return roles.some(role => permissionRoles.indexOf(role)>=0)
 }
 
-const whiteList = [];   //添加白名单  
+const whiteList = ['/login'];   //添加白名单  
 
 router.beforeEach((to, from, next)=>{ 
 	NProgress.start()
@@ -26,18 +26,29 @@ router.beforeEach((to, from, next)=>{
 		else{
 			if(store.getters.roles.length === 0){
 				store.dispatch('GetUserInfo').then(response =>{
-					const res = response.data;
-					const roles = res.roles
-					store.dispatch('GenerateRoutes',{roles}).then(()=>{
+					console.log("============根据token获取用户信息============");
+					console.log(response);
+					const res = response.data.result;
+					const roles = res.userRole
+					console.log("roles的类型"+ typeof(roles))//返回的是对象类型
+					console.log("目前权限为:"+roles)
+					//对象转数组
+					var theRoles = [];
+				//	for(var a in roles){
+				//		theRoles.push(roles[a])						
+				//	}
+				//	console.log("数组:"+ theRoles);
+				//	console.log("roles的类型"+ typeof(theRoles))
+					store.dispatch('GenerateRoutes',{roles}).then(()=>{//这里的roles必须是数组
 						router.addRoutes(store.getters.addRouters)
 						next({...to, repalace:true})
 					})						
-				}).catch(()=>{
+				})/*.catch(()=>{
 					store.dispatch('FedLogOut').then(()=>{
 						Message.error('信息错误，请再次登录')
 						next({path:'/login'})
 					})					
-				})			
+				})*/			
 			}
 			else{
 				//判断权限的变化

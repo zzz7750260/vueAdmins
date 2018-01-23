@@ -1,48 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Home from '../pages/home/'
-import Login from '../pages/login'
-import RegisteLoad from '../pages/registeLoad'
-import Registe from '../pages/registe'
-import AdminHome from '../pages/adminHome'
-
-//这个是测试
-import Cs from '../pages/cs/registe_cs'
+const _import = require('./_import_' + process.env.NODE_ENV)
 
 Vue.use(Router)
 
+export const constantRouterMap = [
+	{path:'/login', component:_import('login/index'), hidden:true},
+	{path:'/404', component:_import('errorPage/404'), hidden:true},
+	{path:'/401', component:_import('errorPage/401'), hidden:true},
+]
+
 export default new Router({
-  routes: [
-    {
-		path: '/home',
-		name: 'home',
-		component: Home
-    },
-	{
-		path: '/login',
-		name: 'login',
-		component: Login,		
-	},
-	{
-		path: '/registe',
-		name: 'registe',
-		component: Registe,
-	},
-	{
-		path: '/registeload',
-		name: 'registeload',
-		component: RegisteLoad,
-	},
-	{
-		path: '/adminhome',
-		name: 'adminhome',
-		component: AdminHome,
-	},
-	{
-		path: '/cs',
-		name: 'cs',
-		component:Cs,
-	}
-  ]
+	routes:constantRouterMap	
 })
+
+
+export const asyncRouterMap = [
+	{path:'/login', component:_import('login/index'), hidden:true},		
+			
+
+]

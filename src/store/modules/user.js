@@ -1,5 +1,5 @@
 import {getToken,setToken,removeToken} from '../../utils/auth'
-import {loginByUsername} from '../../api/login'
+import {loginByUsername, getUserInfo} from '../../api/login'
 
 const user = {
 	state:{
@@ -32,7 +32,10 @@ const user = {
 		SET_NAME:(state,status) =>{
 			state.status = status			
 		},
-		SET_AVATAR:(state,roles) =>{
+		//SET_AVATAR:(state,roles) =>{
+			//state.roles = roles
+		//},
+		SET_ROLES:(state, roles) =>{
 			state.roles = roles
 		}
 	},
@@ -58,25 +61,27 @@ const user = {
 		},
 		
 		//获取用户信息
-		/*
+		
 		GetUserInfo({ commit,state }){
 			return new Promise((resolve,reject)=>{
 				getUserInfo(state.token).then(response =>{
+					//console.log("============根据token获取用户信息============");
+					//console.log(response);
 					if(!response.data){
 						reject('error')
 					}
-					const data = response.data
+					const data = response.data.result
 					commit('SET_ROLES',data.roles)
-					commit('SET_NAME',data.name)
-					commit('SET_AVATAR',data.avatar)
-					commit('SET_INTRODUCTION',data.introduction)
+					//commit('SET_NAME',data.name)
+					//commit('SET_AVATAR',data.avatar)
+					//commit('SET_INTRODUCTION',data.introduction)
 					resolve(response)
 				}).catch(error => {
 					reject(error)
 				})
 			})			
 		}	
-		*/
+		
 	}
 }
 
