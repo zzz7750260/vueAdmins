@@ -65,13 +65,13 @@ const user = {
 		GetUserInfo({ commit,state }){
 			return new Promise((resolve,reject)=>{
 				getUserInfo(state.token).then(response =>{
-					//console.log("============根据token获取用户信息============");
-					//console.log(response);
+					console.log("============根据token获取用户信息============");
+					console.log(response);
 					if(!response.data){
 						reject('error')
 					}
 					const data = response.data.result
-					commit('SET_ROLES',data.roles)
+					commit('SET_ROLES',data.userRole)
 					//commit('SET_NAME',data.name)
 					//commit('SET_AVATAR',data.avatar)
 					//commit('SET_INTRODUCTION',data.introduction)

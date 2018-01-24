@@ -13,7 +13,7 @@ function hasPermission(roles, permissionRoles){
 	return roles.some(role => permissionRoles.indexOf(role)>=0)
 }
 
-const whiteList = ['/login'];   //添加白名单  
+const whiteList = ['/login','/registe','/404'];   //添加白名单  
 
 router.beforeEach((to, from, next)=>{ 
 	NProgress.start()
@@ -24,12 +24,13 @@ router.beforeEach((to, from, next)=>{
 			NProgress.done()
 		}
 		else{
-			if(store.getters.roles.length === 0){
+			if(store.getters.roles.length === 0){				
 				store.dispatch('GetUserInfo').then(response =>{
-					console.log("============根据token获取用户信息============");
-					console.log(response);
+					//console.log("============根据token获取用户信息============");
+					//console.log(response);
 					const res = response.data.result;
 					const roles = res.userRole
+					console.log("store.getters.roles:"+store.getters.roles)
 					console.log("roles的类型"+ typeof(roles))//返回的是对象类型
 					console.log("目前权限为:"+roles)
 					//对象转数组
