@@ -64,7 +64,22 @@ export const asyncRouterMap = [
 				roles: ['admin']
 			}
 		}]		
-	},		
+	},	
+	{
+		path:'/icon',
+		component:Layout,
+		children:[{
+			path:'index',
+			component:_import('svg-icons/index'),
+			name:'icons',
+			meta:{
+				title:'icons',
+				icon:'icon',
+				noCache:true				
+			}		
+		}]
+		
+	}
 			
 
 ]

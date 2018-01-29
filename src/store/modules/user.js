@@ -80,7 +80,24 @@ const user = {
 					reject(error)
 				})
 			})			
-		}	
+		},
+
+		//切换用户权限
+		ChangeRoles({ commit }, role){
+			return new Promise(resolve => {
+				commit('SET_ROLES', role)
+				setToken(role)
+				getUserInfo(role).then((response)=>{
+					console.log("=========切换获取信息==========")
+					console.log(response);
+					let res = response.data;	
+					commit('SET_ROLES', res.result.userRole)
+					commit('SET_NAME', res.result.userName)
+					resolve()
+				})
+				
+			})			
+		}
 		
 	}
 }
