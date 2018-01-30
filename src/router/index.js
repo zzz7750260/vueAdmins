@@ -49,22 +49,63 @@ export default new Router({
 
 //需要权限判断页面加载
 export const asyncRouterMap = [
-	{
+		{
 		path:'/premission', 
 		component:Layout,
-		redirect:'/permission/index',
-		meta:{roles:['admin']},
-		children:[{
-			path:'index',
-			component:_import('permission/index'),
-			name:'permission',
-			meta:{
-				title: 'permission',
-				icon: 'lock',
-				roles: ['admin']
-			}
-		}]		
+		redirect:'noredirect',
+		name:'premission',
+		meta:{
+			title: 'premission',
+			icon: 'lock',				
+			roles:['admin']
+		},
+		children:[
+			{
+				path:'therole',
+				component:_import('permission/therole'),
+				name:'therole',
+				meta:{
+					title: 'therole',
+					icon: 'lock',
+					roles: ['admin']
+				}
+			},
+			{
+				path:'addrole',
+				component:_import('permission/addRole'),
+				name:'addrole',
+				meta:{
+					title:'addrole',
+					icon: 'lock',
+					roles: ['admin']
+				}
+			},			
+		]		
 	},	
+	/*{
+		path:'/role',
+		component:Layout,
+		redirect:'noredirect',
+		name:'role',
+		meta:{
+			title:'role',
+			icon:'role',		
+		},
+		children:[
+			{
+				path:'addrole',
+				component:_import('roles/addRole'),
+				name:'addrole',
+				meta:{title:'addrole',icon:'role'}
+			},
+			{
+				path:'changerole',
+				component:_import('roles/changeRole'),
+				name:'changerole',
+				meta:{title:'changerole',icon:'role'}
+			},
+		]
+	},*/
 	{
 		path:'/icon',
 		component:Layout,
