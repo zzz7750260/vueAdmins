@@ -4,13 +4,13 @@
 			<router-link v-if="item.children.length ===1 && !item.children[0].children && !item.alwayShow" :to="item.path+'/'+item.children[0].path" v-bind:key="item.children[0].name">
 				<el-menu-item v-bind:index = "item.path + '/' + item.children[0].path" v-bind:class="{'submenu-title-noDropdown':!isNest}"> 
 					<i v-if="item.children[0].meta&&item.children[0].meta.icon" v-bind:class="item.children[0].meta.icon"></i>
-					<span v-if="item.children[0].meta && item.children[0].meta.title">{{item.children[0].meta.title}}</span>
+					<span v-if="item.children[0].meta && item.children[0].meta.title">{{generateTitle(item.children[0].meta.title)}}</span>
 				</el-menu-item>
 			</router-link>
 			<el-submenu v-else v-bind:index="item.path||item.name" v-bind:key="item.name">
 				<template slot="title">
 					<i v-if="item.meta && item.meta.icon" v-bind:class="item.meta.icon"></i>
-					<span v-if="item.meta.title && item.meta">{{item.meta.title}}</span>
+					<span v-if="item.meta.title && item.meta">{{generateTitle(item.meta.title)}}</span>
 				</template>
 				
 				<template v-for="child in item.children" v-if="!child.hidden">
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { generateTitle } from '../../../../utils/i18n'
 export default{
 	name:'SidebarItem',
 	props:{
@@ -38,6 +39,9 @@ export default{
 			type:Boolean,
 			default:false
 		}
+	},
+	methods:{
+		generateTitle
 	}
 }
 </script>

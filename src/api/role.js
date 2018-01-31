@@ -14,3 +14,10 @@ export function addRole(therole,theroleen){
 	})
 	
 }
+
+export function getRole(){
+	return request({
+		url:'./admin/getRole',
+		method:'get',
+	})	
+}

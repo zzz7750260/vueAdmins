@@ -17,9 +17,9 @@
 			 </el-tooltip>
 			-->
 			
-			 <!--语音选择
+			 <!--语音选择-->
 			<lang-select class="international right-menu-item"></lang-select>		
-			-->
+			
 			
 			<!--主题选择
 			<el-tooltip effect="dark" content="样式" placement="bottom">
@@ -50,9 +50,11 @@
 <script>
 	import {mapGetters} from 'vuex'
 	import Hamburger from '../../../components/Hamburger'
+	import LangSelect from '../../../components/LangSelect'
 	export default{
 		components:{
 			Hamburger,
+			LangSelect
 		},
 		computed:{
 			...mapGetters([

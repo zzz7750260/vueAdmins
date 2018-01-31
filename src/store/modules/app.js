@@ -24,9 +24,11 @@ const app = {
 		}		
 	},
 	actions:{
+		//切换汉堡包
 		toggleSideBar({ commit }){
 			commit('TOGGLE_SIDEBAR')				
 		},
+		//切换语言
 		setLanguage({ commit }, language){
 			commit('SET_LANGUAGE', language)			
 		}

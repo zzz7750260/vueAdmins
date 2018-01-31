@@ -50,12 +50,12 @@ export default new Router({
 //需要权限判断页面加载
 export const asyncRouterMap = [
 		{
-		path:'/premission', 
+		path:'/permission', 
 		component:Layout,
 		redirect:'noredirect',
-		name:'premission',
+		name:'permission',
 		meta:{
-			title: 'premission',
+			title: 'permission',
 			icon: 'lock',				
 			roles:['admin']
 		},

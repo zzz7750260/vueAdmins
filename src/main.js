@@ -5,6 +5,7 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+/*使用设置的路由权限*/
 import './permission'
 
 /*axios使用*/
@@ -14,6 +15,9 @@ Vue.prototype.$http = axios
 /*vuex使用*/
 import store from './store/'
 
+/*使用国际i18n*/
+import i18n from './lang'
+
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
@@ -22,6 +26,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  i18n,
   store,
   render: h => h(App)
 })
