@@ -20,7 +20,7 @@
 </template>
 
 <script>
-	import {addRole} from '../../api/role'
+	import {addRole} from '../../api/admin'
 	export default{
 		name:'addrole',
 		data(){

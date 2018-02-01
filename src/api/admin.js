@@ -21,3 +21,10 @@ export function getRole(){
 		method:'get',
 	})	
 }
+
+export function getUser(){
+	return request({
+		url:'./admin/getUser',
+		method:'get'
+	})	
+}
