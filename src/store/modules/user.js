@@ -1,5 +1,6 @@
 import {getToken,setToken,removeToken} from '../../utils/auth'
 import {loginByUsername, getUserInfo} from '../../api/login'
+import {getChangeRole} from '../../api/admin'
 
 const user = {
 	state:{
@@ -97,8 +98,17 @@ const user = {
 				})
 				
 			})			
-		}
+		},
 		
+		//控制用户权限
+		getChangeRoles({ commit },roleArray,theRole){
+			return new Promise((resolve) =>{
+				getChangeRole(roleArray,theRole).then((response)=>{
+					console.log(response)
+					let res = response.data;										
+				})				
+			})			
+		}		
 	}
 }
 

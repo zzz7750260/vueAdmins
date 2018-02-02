@@ -28,3 +28,15 @@ export function getUser(){
 		method:'get'
 	})	
 }
+
+export function getChangeRole(roleArray,theRole){
+	const data = {
+		userArray,
+		userRole
+	}
+	return request({
+		url:'./admin/getChangeRole',
+		method:'post',
+		data 
+	})	
+}

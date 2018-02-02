@@ -20,7 +20,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import {getRole,getUser} from '../../api/admin'
+import {getRole,getUser,getChangeRoles} from '../../api/admin'
 export default{
 	name: 'permission',
 	data(){
