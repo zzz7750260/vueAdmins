@@ -37,7 +37,7 @@ export const constantRouterMap = [
 			path:'dashboard',
 			component: _import('dashboard/index'),
 			name:'dashboard',
-			meta:{title:'dashboard', icon:'dashboard',noCache:true}			
+			meta:{title:'dashboard', icon:'el-icon-location',noCache:true}			
 		}]
 	}
 	
@@ -56,7 +56,7 @@ export const asyncRouterMap = [
 		name:'permission',
 		meta:{
 			title: 'permission',
-			icon: 'lock',				
+			icon: 'el-icon-edit',				
 			roles:['admin']
 		},
 		children:[
@@ -116,7 +116,7 @@ export const asyncRouterMap = [
 			meta:{
 				title:'icons',
 				icon:'icon',
-				noCache:true				
+				noCache:true			
 			}		
 		}]
 		

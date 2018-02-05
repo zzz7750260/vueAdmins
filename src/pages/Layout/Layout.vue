@@ -5,19 +5,21 @@
 			<navbar></navbar>
 			<sidebar></sidebar>
 			<tags-view></tags-view>
-			<router-view></router-view>
+			<!--<router-view></router-view>-->
+			<app-main></app-main>
 		</div>
 	</div>
 </template>
 
 <script>
-	import {Navbar,TagsView,Sidebar} from './components'
+	import {Navbar,TagsView,Sidebar,AppMain} from './components'
 	export default{
 		name:'layout',
 		components:{
 			Navbar,
 			TagsView,
 			Sidebar,
+			AppMain,
 		},
 	
 	}

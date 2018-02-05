@@ -44,9 +44,18 @@ export default{
 	},	
 	watch:{
 		switchRoles(val){
-			this.$store.dispatch('ChangeRoles',val).then(()=>{
-				this.$router.push({ path:'/permission/index?'+ +new Date()})
+			//this.$store.dispatch('ChangeRoles',val).then(()=>{
+			//	this.$router.push({ path:'/permission/index?'+ +new Date()})
+			//})
+			console.log("选择的权限:"+val)
+			var params = {
+				roleArray:this.selectUserName,
+				theRole:val
+			}
+			this.$store.dispatch('getChangeRolesControl',params).then((response)=>{
+				console.log(response);
 			})
+			
 		}
 	},
 	methods:{

@@ -29,13 +29,16 @@ export function getUser(){
 	})	
 }
 
-export function getChangeRole(roleArray,theRole){
+export function getChangeRole(theParams){
+	console.log("===============传递的用户组以及选择的角色==============");
+	console.log("roleArray:" + theParams.roleArray);
+	console.log("theRole:" + theParams.theRole);
 	const data = {
-		userArray,
-		userRole
+		userArray:theParams.roleArray,
+		userRole:theParams.theRole
 	}
 	return request({
-		url:'./admin/getChangeRole',
+		url:'./admin/getChangeRoles',
 		method:'post',
 		data 
 	})	

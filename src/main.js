@@ -5,6 +5,9 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+/*引入主样式*/
+import './styles/index.less'
+
 /*使用设置的路由权限*/
 import './permission'
 

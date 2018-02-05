@@ -4,6 +4,9 @@ export default{
 	},
 	route:{
 		dashboard:'Dashboard',
-		permission:'Permission',		
+		permission:'Permission',	
+		therole:'TheRole',
+		addrole:'AddRole',
+		icons:'Icons'
 	}	
 }

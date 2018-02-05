@@ -101,11 +101,14 @@ const user = {
 		},
 		
 		//控制用户权限
-		getChangeRoles({ commit },roleArray,theRole){
+		getChangeRolesControl({ commit },theParams){
 			return new Promise((resolve) =>{
-				getChangeRole(roleArray,theRole).then((response)=>{
+				console.log("================获取用户控制的权限=============");
+				console.log("roleArray:"+ theParams.roleArray);
+				console.log("theRole:"+ theParams.theRole);
+				getChangeRole(theParams).then((response)=>{
 					console.log(response)
-					let res = response.data;										
+					let res = response.data;									
 				})				
 			})			
 		}		
