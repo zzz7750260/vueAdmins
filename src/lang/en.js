@@ -8,5 +8,10 @@ export default{
 		therole:'TheRole',
 		addrole:'AddRole',
 		icons:'Icons'
-	}	
+	},
+	navbar:{
+		dashboard:'Dashboard',
+		logOut:'Log Out',
+		theme:'theme',		
+	}
 }

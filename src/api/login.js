@@ -20,3 +20,15 @@ export function getUserInfo(token){
 		params:{ token }		
 	})	
 }
+
+//用户登出
+export function logout(token){
+	const data = {
+		theToken:token		
+	}
+	return request({
+		url:'./admin/logOut',
+		method:'post',
+		data
+	})	
+}

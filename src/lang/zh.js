@@ -9,5 +9,10 @@ export default{
 		therole:'角色管理',
 		addrole:'添加角色',
 		icons:'图标'		
-	}	
+	},
+	navbar:{
+		dashboard:'首页',
+		logOut:'退出登录',
+		theme:'切换主题',		
+	}
 }

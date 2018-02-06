@@ -1,5 +1,5 @@
 import {getToken,setToken,removeToken} from '../../utils/auth'
-import {loginByUsername, getUserInfo} from '../../api/login'
+import {loginByUsername, getUserInfo,logout} from '../../api/login'
 import {getChangeRole} from '../../api/admin'
 
 const user = {
@@ -111,7 +111,21 @@ const user = {
 					let res = response.data;									
 				})				
 			})			
-		}		
+		},
+
+		//用户登出
+		logOut({ commit,state }){
+			return new Promise((resolve,reject) => {
+				logout(state.token).then(()=>{
+					commit('SET_TOKEN','')
+					commit('SET_ROLES',[])
+					removeToken()
+					resolve()
+				}).catch(error =>{
+					reject(error)					
+				})				
+			})		
+		}
 	}
 }
 
