@@ -49,7 +49,7 @@ export default new Router({
 
 //需要权限判断页面加载
 export const asyncRouterMap = [
-		{
+	{
 		path:'/permission', 
 		component:Layout,
 		redirect:'noredirect',
@@ -120,7 +120,36 @@ export const asyncRouterMap = [
 			}		
 		}]
 		
+	},
+	{
+		path:'/article',
+		component:Layout,
+		name:'article',
+		redirect:'noredirect',
+		meta:{
+			title:'article',
+			icon: 'el-icon-document',				
+		},
+		children:[
+			{
+				path:'addarticle',
+				component:_import('article/addArticle'),
+				name:'addarticle',
+				meta:{
+					title:'addarticle',
+					icon:'el-icon-documents',
+				}		
+			},
+			{
+				path:'editarticle',
+				component:_import('article/editArticle'),
+				name:'editarticle',
+				meta:{
+					title:'editarticle',
+					icon:'el-icon-documents',
+				}		
+			},
+				
+		]
 	}
-			
-
 ]
