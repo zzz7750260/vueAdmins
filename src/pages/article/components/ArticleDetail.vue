@@ -25,9 +25,9 @@
 					<el-button plain>平台
 						<i class="el-icon-caret-bottom el-icon--right"></i>
 					</el-button>
-					<el-dropdown-menu>
+					<el-dropdown-menu class="no-border" slot="dropdown">
 						<el-checkbox-group v-model="postForm.platforms" style="padding:5px 15px;">
-							<el-checkbox v-for:"item in platformsOptions" v-bind:label="item.key" v-bind:key="item.key">
+							<el-checkbox v-for="item in platformsOptions" v-bind:label="item.key" v-bind:key="item.key">
 								{{item.name}}
 							</el-checkbox>
 						</el-checkbox-group>
@@ -47,23 +47,71 @@
 					</el-dropdown-menu>
 				</el-dropdown>
 				
-				<el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm()>
-					发布
+
+				<el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm()">发布
 				</el-button>
 				
-				<el-button v-loading="loading" type="warning" @click="draftForm">
-					草稿
-				</el-button>	
-			</template>
+				<el-button v-loading="loading" type="warning" @click="draftForm">草稿</el-button>	
+				</template>
 			
 			<template v-else>
 				<el-tag>发送异常错误,刷新页面,或者联系程序员</el-tag>
 			</template>
+			
+			<div class="createPost-main-container">
+				<el-row>
+					<el-col :span="21">
+						<el-form-item style="margin-bottom:40px" prop="title">
+							<MDinput name="name" v-model="postForm.title" required v-bind:maxlength="100">
+								标题							
+							</MDinput>
+							<span v-show="postForm.title.length >= 26" class="title-prompt">app可能显示不全</span>
+						</el-form-item>
+						
+						<div class="postInfo-container">
+							<el-row>
+								<el-col :span="8">
+									<el-form-item label-width="45px" label="作者" class="postInfo-cantainer-item">
+										<el-input placeholder="文章作者" v-model="postForm.author" style="min-width:150px"></el-input>
+									</el-form-item>
+								</el-col>
+								
+								<el-col :span="8">
+									<el-tooltip clas="item" effect="dark" content="文章来源" placement="top">
+										<el-form-item label-width="50px" label="来源" class="postInfo-container-item">
+											<el-input placeholder="输入文章来源" style="min-width:150px;" v-model="postForm.source_name">
+											</el-input>
+										</el-form-item>
+									</el-tooltip>								
+								</el-col>
+								
+								<el-col :span="8">
+									<el-form-item label-width="80px" label="发布时间" class="postInfo-cantainer-item">
+										<el-date-picker v-model="postForm.display_time" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间"></el-date-picker>
+									</el-form-item>
+								</el-col>
+							</el-row>					
+						</div>
+					</el-col>				
+				</el-row>
+				
+				<el-form-item style="margin-bottom:40px" label-width="45px" label="摘要">
+					<el-input type="textarea" class="article-textarea" :rows="1" placeholder="请输入摘要内容" v-model=" postForm.content_short"></el-input>
+					<span class="word-counter" v-show="contentShortLength"> {{contentShortLength}} 字</span>
+				</el-form-item>
+				
+				<div class="editor-container">
+					<tinymce v-bind:height=400 ref="editor" v-model="postForm.content"></tinymce>
+				</div>
+			</div>
 		</el-form>
 	</div>
 </template>
 
 <script>
+	import Tinymce from '../../../components/Tinymce'
+	import MDinput from '@/components/MDinput'
+	import {addArticle} from '../../../api/article'
 	const defaultForm = {
 		status:'draft',
 		title:'',
@@ -87,9 +135,68 @@
 			}
 		},
 		data(){
-			return{
-				fetchSuccess:true
+			const validateRequire = (rule, value, callback)=>{
+				if(value ===''){
+					this.$message({
+						message:rule.field + '为必传项',
+						type:'error'
+					})
+					callback(null)
+				}
+				else{
+					callback()
+				}
 			}
+			const validateSourceUrl = (rule, value, callback)=>{
+				if(value){
+					callback()
+				}
+			}
+			return{
+				postForm:Object.assign({},defaultForm),
+				fetchSuccess:true,
+				loading:false,
+				userLIstOptions:[],
+				platformsOptions:[
+					{ key: 'a-platform', name: 'a-platform' },
+					{ key: 'b-platform', name: 'b-platform' },
+					{ key: 'c-platform', name: 'c-platform' }					
+				],
+				rules:{
+					image_url:[{validator: validateRequire}],
+					title:[{validator: validateRequire}],
+					content:[{validator: validateRequire}],
+					source_url:[{validator: validateSourceUrl, trigger: 'blur' }],
+				}				
+			}
+		},
+		computed:{
+			contentShortLength(){
+				return this.postForm.content_short.length;
+			}
+		},
+		methods:{
+			submitForm(){
+				this.postForm.display_time = parseInt(this.display_time /1000)
+				console.log(this.postForm)
+					addArticle(this.postForm).then((response)=>{
+							console.log(response)
+						})
+				this.$refs.postForm.validate(valid => {
+					if(valid){
+						this.loading = true
+					
+						
+					}
+				})
+			},
+			draftForm(){
+				
+			}
+		},
+		components:{
+			MDinput,
+			Tinymce
 		}
 	}
 </script>
