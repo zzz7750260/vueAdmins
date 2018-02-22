@@ -30,8 +30,12 @@ const user = {
 		SET_SETTING: (state, setting) =>{
 			state.setting = setting			
 		},
-		SET_NAME:(state,status) =>{
+		SET_STATUS:(state,status) =>{
 			state.status = status			
+		},
+		SET_NAME:(state,name) =>{
+			state.name = name
+			
 		},
 		//SET_AVATAR:(state,roles) =>{
 			//state.roles = roles
@@ -73,7 +77,7 @@ const user = {
 					}
 					const data = response.data.result
 					commit('SET_ROLES',data.userRole)
-					//commit('SET_NAME',data.name)
+					commit('SET_NAME',data.userName)
 					//commit('SET_AVATAR',data.avatar)
 					//commit('SET_INTRODUCTION',data.introduction)
 					resolve(response)

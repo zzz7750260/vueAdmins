@@ -10,6 +10,8 @@ export default{
 		addrole:'添加角色',
 		icons:'图标',
 		article:'文章',
+		addarticle:'添加文章',
+		editarticle:'编辑文章',
 	},
 	navbar:{
 		dashboard:'首页',

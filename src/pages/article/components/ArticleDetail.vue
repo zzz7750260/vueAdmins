@@ -72,7 +72,7 @@
 							<el-row>
 								<el-col :span="8">
 									<el-form-item label-width="45px" label="作者" class="postInfo-cantainer-item">
-										<el-input placeholder="文章作者" v-model="postForm.author" style="min-width:150px"></el-input>
+										<el-input placeholder="文章作者,不填默认为登录用户名" v-model="postForm.author" style="min-width:150px"></el-input>
 									</el-form-item>
 								</el-col>
 								
@@ -112,15 +112,17 @@
 	import Tinymce from '../../../components/Tinymce'
 	import MDinput from '@/components/MDinput'
 	import {addArticle} from '../../../api/article'
+	import {isvalidateURL} from '../../../utils/validate'
 	const defaultForm = {
 		status:'draft',
+		author:'',
 		title:'',
 		content:'',
 		content_short:'',
 		source_url:'',
 		image_url:'',
 		source_name:'',
-		display_time:'',
+		display_time:undefined,//显示时间
 		id:'',
 		platforms:['a-platform'],
 		commit_disabled:false
@@ -148,7 +150,21 @@
 				}
 			}
 			const validateSourceUrl = (rule, value, callback)=>{
+				console.log("获取url的值：" + value);
+				
 				if(value){
+					if(isvalidateURL(value)){
+						callback()	
+					}
+					else{
+						this.$message({
+							message:'外链url填写不正确',
+							type:'error'
+						})
+						callback(null)
+					}
+				}
+				else{
 					callback()
 				}
 			}
@@ -173,25 +189,66 @@
 		computed:{
 			contentShortLength(){
 				return this.postForm.content_short.length;
+			},
+			articleEdierName(){
+				return this.$store.getters.name
 			}
 		},
 		methods:{
 			submitForm(){
-				this.postForm.display_time = parseInt(this.display_time /1000)
-				console.log(this.postForm)
-					addArticle(this.postForm).then((response)=>{
-							console.log(response)
-						})
+				//this.postForm.display_time = parseInt(this.display_time /1000)
+				console.log(this.postForm);
+				if(this.postForm.author == ""){
+					this.postForm.author = this.articleEdierName;
+				}
+				console.log("作者显示:"+this.postForm.author)
+				
 				this.$refs.postForm.validate(valid => {
 					if(valid){
 						this.loading = true
-					
+						this.postForm.status = 'published'
+						addArticle(this.postForm).then((response)=>{
+							console.log(response);
+							let res = response.data;
+							if(res.status == "2"){
+								this.$notify({
+									title: '成功',
+									message: '文章发布成功',
+									type:'success',
+									duration: 2000
+								})
+							}
+							this.loading = false;
+						})
 						
 					}
 				})
 			},
 			draftForm(){
-				
+				if(this.postForm.content.length === 0 || this.postForm.title.length === 0){
+					this.$message({
+						message:'文章标题或者内容不能为空',
+						type:'warning'
+					})
+					return
+				}
+				else{
+					this.loading = true
+					this.postForm.status = 'draft'
+					addArticle(this.postForm).then((response)=>{
+						console.log(response);
+						let res = response.data;
+						if(res.status == "2"){
+							this.$notify({
+								title: '成功',
+								message: '文章草稿成功',
+								type:'success',
+								duration: 2000
+							})
+						}
+						this.loading = false;
+					})
+				}
 			}
 		},
 		components:{

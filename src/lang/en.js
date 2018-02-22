@@ -7,7 +7,10 @@ export default{
 		permission:'Permission',	
 		therole:'TheRole',
 		addrole:'AddRole',
-		icons:'Icons'
+		icons:'Icons',
+		article:'Article',
+		addarticle:'AddArticle',
+		editarticle:'EditArticle',
 	},
 	navbar:{
 		dashboard:'Dashboard',
