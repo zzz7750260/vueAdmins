@@ -9,3 +9,14 @@ export function addArticle(postForm){
 		data
 	})
 }
+
+export function listArticle(theParams){
+	var getParams = {
+		articleStatus:theParams,		
+	}
+	return request({
+		url:'./users/listArticle',
+		method:'get',
+		params:getParams
+	})	
+}

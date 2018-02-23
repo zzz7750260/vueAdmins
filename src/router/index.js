@@ -149,7 +149,15 @@ export const asyncRouterMap = [
 					icon:'el-icon-documents',
 				}		
 			},
-				
+			{
+				path:'listarticle',
+				component:_import('article/listArticle'),
+				name:'listarticle',
+				meta:{
+					title:'listarticle',
+					icon:'el-icon-documents',
+				}
+			}			
 		]
 	}
 ]
