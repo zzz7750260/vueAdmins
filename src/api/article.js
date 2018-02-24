@@ -10,13 +10,26 @@ export function addArticle(postForm){
 	})
 }
 
+//获取文章列表
 export function listArticle(theParams){
-	var getParams = {
-		articleStatus:theParams,		
-	}
+	//var getParams = {
+	//	articleStatus:theParams,		
+	//}
 	return request({
 		url:'./users/listArticle',
 		method:'get',
-		params:getParams
+		params:theParams
 	})	
 }
+
+//获取文章详情
+export function getArticleDetail(theID){
+	var theParams = {
+		articleID:theID
+	}
+	return request({
+		url:'./users/articleDetail',
+		method:'get',
+		params:theParams,
+	})	
+} 

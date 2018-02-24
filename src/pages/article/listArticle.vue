@@ -79,16 +79,28 @@
 					width="180"
 				>	
 					<template slot-scope="scope">
-						<el-button type="primary" size="mini">
+						{{scope.row.articleID}}
+						<el-button type="primary" size="mini" @click="editArticle(scope.row.articleID)">
 							{{$t('table.edit')}}
 						</el-button>
 						<el-button type="danger" size="mini">
 							{{$t('table.delete')}}
 						</el-button>
 					</template>
-				</el-table-column>				
-				
+				</el-table-column>								
 			</el-table>
+		</div>
+		<div>
+			<el-pagination
+				@size-change="handleSizeChange"
+				@current-change="handleCurrentChange"
+				:current-page.sync="currentPage"
+				:page-size="thePageSize"
+				:page-sizes="thePageSizes"
+				layout="total, sizes, prev, pager, next, jumper"
+				:total="theTotal"
+			>
+			</el-pagination>
 		</div>
 	</div>	
 </template>
@@ -99,7 +111,12 @@
 		data(){
 			return{
 				changeStatus:'',
+				thisStatus:'',
 				theListArticle:[],
+				currentPage:1,
+				thePageSize:10,
+				thePageSizes:[10,20,30,40],
+				theTotal:50
 			}
 		},
 		
@@ -121,11 +138,18 @@
 		watch:{
 			changeStatus(val){
 				console.log("切换状态：" + val);
-				listArticle(val).then((response)=>{
+				this.thisStatus = val;
+				var params = {
+					page:1,
+					pageSize:10,
+					articleStatus:val,
+				}
+				listArticle(params).then((response)=>{
 					console.log("==============切换选择状态下返回的结果===============")
 					console.log(response)
 					let res = response.data;
-					this.theListArticle = res.result;
+					this.theListArticle = res.result.theResult;
+					this.theTotal = res.result.total;
 				})
 			}
 		},
@@ -134,18 +158,64 @@
 			this.getListArtcle()	
 		},
 		methods:{
+			
 			getListArtcle(){
-				listArticle().then((response)=>{
+				var params = {
+					page:1,
+					pageSize:10,					
+				}
+				listArticle(params).then((response)=>{
 					console.log("=============输出返回文章结果===============");
 					console.log(response)
 					let res = response.data;
-					this.theListArticle = res.result
+					this.theListArticle = res.result.theResult;
+					this.theTotal = res.result.total;
 				})
 			},
 			
 			handleSelectionChange(){
 				
-			},			
+			},
+			handleSizeChange(val){
+				console.log(`当前条数:${val}`)
+				console.log(`获取thisStatus的状态:${this.thisStatus}`)
+				this.thePageSize = val
+				var params = {
+					page:1,
+					pageSize:val,
+					articleStatus:this.thisStatus,
+				}
+				listArticle(params).then((response)=>{
+					console.log("==============切换选择条数的状态下返回的结果===============")
+					console.log(response)
+					let res = response.data;
+					this.theListArticle = res.result.theResult;
+					this.theTotal = res.result.total;
+				})
+				
+			},
+			handleCurrentChange(val){
+				console.log(`当前页面:${val}`);
+				var params = {
+					page:val,
+					pageSize:this.thePageSize,
+					articleStatus:this.thisStatus,
+				}
+				listArticle(params).then((response)=>{
+					console.log("==============切换选择条数的状态下返回的结果===============")
+					console.log(response)
+					let res = response.data;
+					this.theListArticle = res.result.theResult;
+					this.theTotal = res.result.total;
+				})				
+			},
+			editArticle(articleID){
+				console.log("==============该文章的id=============");
+				console.log(articleID)
+				//跳转对应的文章详情页面
+				this.$router.push({path:'./editarticle',query:{articleID:articleID}});
+			}
+			
 		}
 	}
 </script>

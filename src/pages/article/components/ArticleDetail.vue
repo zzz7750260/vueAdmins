@@ -113,6 +113,7 @@
 	import MDinput from '@/components/MDinput'
 	import {addArticle} from '../../../api/article'
 	import {isvalidateURL} from '../../../utils/validate'
+	import {getArticleDetail} from '../../../api/article.js'
 	const defaultForm = {
 		status:'draft',
 		author:'',
@@ -194,6 +195,16 @@
 				return this.$store.getters.name
 			}
 		},
+		
+		created(){
+			if(this.isEdit){
+				this.theArticleDetail()
+			}
+			else{
+				this.postForm = Object.assign({},defaultForm)
+			}		
+		},
+		
 		methods:{
 			submitForm(){
 				//this.postForm.display_time = parseInt(this.display_time /1000)
@@ -249,6 +260,16 @@
 						this.loading = false;
 					})
 				}
+			},
+			
+			theArticleDetail(){
+				console.log("============vue中获取链接参数===========");
+				let paramsId = this.$route.query.articleID
+				console.log(paramsId)
+				getArticleDetail(paramsId).then((response)=>{
+					console.log("============文章详情页组件中获取到的返回文章结果======")
+					console.log(response)
+				})
 			}
 		},
 		components:{
