@@ -269,6 +269,22 @@
 				getArticleDetail(paramsId).then((response)=>{
 					console.log("============文章详情页组件中获取到的返回文章结果======")
 					console.log(response)
+					let res = response.data
+					var theParams = {
+						status:res.result.articleStatus,
+						author:res.result.articleAuthor,
+						title:res.result.articleTitle,
+						content:res.result.articleContent,
+						content_short:res.result.articleShortContent,
+						source_url:res.result.articleSource,
+						image_url:res.result.articleImg,
+						source_name:res.result.articleSourceName,
+						display_time:res.result.articleTime,//显示时间
+						id:res.result.articleID,
+						platforms:['a-platform'],
+						commit_disabled:res.result.articleCheck						
+					}
+					this.postForm = theParams
 				})
 			}
 		},
