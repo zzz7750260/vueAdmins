@@ -48,9 +48,10 @@
 				</el-dropdown>
 				
 
-				<el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm()">发布
+				<el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm()" v-if="!isEdit">发布
 				</el-button>
-				
+				<el-button v-loading="loading" style="margin-left: 10px;" type="info" @click="updateForm()" v-else="isEdit">更改
+				</el-button>
 				<el-button v-loading="loading" type="warning" @click="draftForm">草稿</el-button>	
 				</template>
 			
@@ -113,7 +114,7 @@
 	import MDinput from '@/components/MDinput'
 	import {addArticle} from '../../../api/article'
 	import {isvalidateURL} from '../../../utils/validate'
-	import {getArticleDetail} from '../../../api/article.js'
+	import {getArticleDetail,updataAricle} from '../../../api/article.js'
 	const defaultForm = {
 		status:'draft',
 		author:'',
@@ -286,6 +287,13 @@
 					}
 					this.postForm = theParams
 				})
+			},
+			
+			updateForm(){
+				updataAricle(this.postForm).then((response)=>{
+					console.log("==================返回更新的文章结果===================")
+					console.log(response)
+				})		
 			}
 		},
 		components:{

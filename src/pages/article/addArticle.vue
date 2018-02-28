@@ -4,7 +4,7 @@
 		<hr>
 		<div>
 		aaa
-			<article-detail></article-detail>
+			<article-detail v-bind:isEdit = "false"></article-detail>
 		</div>
 	</div>
 </template>

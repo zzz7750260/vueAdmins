@@ -32,4 +32,16 @@ export function getArticleDetail(theID){
 		method:'get',
 		params:theParams,
 	})	
+}
+
+//更新文章内容
+export function updataAricle(articleParams){
+	console.log("==================获取更新的文章参数================");
+	console.log(articleParams);
+	const data = articleParams;
+	return request({
+		url:'./users/editUpdataArticle',
+		method:'post',
+		data
+	})	
 } 
