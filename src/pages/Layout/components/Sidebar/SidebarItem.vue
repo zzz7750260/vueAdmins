@@ -15,7 +15,8 @@
 					<span v-if="item.meta.title && item.meta">{{generateTitle(item.meta.title)}}</span>
 				</template>
 				
-				<template v-for="child in item.children" v-if="!child.hidden">
+				<template v-for="child in item.children" v-if="!child.hidden && !child.meta.isMenu">
+					{{child.meta.isMenu}}
 					<sidebar-item :is-nest="true" class="nest-menu" v-if="child.children &&child.children.length>0" v-bind:routes="[child]" v-bind:key="child.path"></sidebar-item>
 					<router-link v-else v-bind:to="item.path+'/'+child.path">
 						<el-menu-item v-bind:index="item.path+'/'+child.path" v-bind:key="child.name">

@@ -294,7 +294,9 @@
 					console.log("==================返回更新的文章结果===================")
 					console.log(response)
 				})		
-			}
+			},
+			
+			
 		},
 		components:{
 			MDinput,

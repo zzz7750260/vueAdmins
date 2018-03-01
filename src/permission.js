@@ -13,7 +13,7 @@ function hasPermission(roles, permissionRoles){
 	return roles.some(role => permissionRoles.indexOf(role)>=0)
 }
 
-const whiteList = ['/login','/registe','/404'];   //添加白名单  
+const whiteList = ['/login','/registe','/404','/articlepage'];   //添加白名单  
 
 router.beforeEach((to, from, next)=>{ 
 	NProgress.start()

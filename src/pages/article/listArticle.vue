@@ -83,7 +83,7 @@
 						<el-button type="primary" size="mini" @click="editArticle(scope.row.articleID)">
 							{{$t('table.edit')}}
 						</el-button>
-						<el-button type="danger" size="mini">
+						<el-button type="danger" size="mini" @click="delArticle(scope.row.articleID)">
 							{{$t('table.delete')}}
 						</el-button>
 					</template>
@@ -106,7 +106,7 @@
 </template>
 
 <script>
-	import {listArticle} from '../../api/article.js'
+	import {listArticle,delArticle} from '../../api/article.js'
 	export default{
 		data(){
 			return{
@@ -214,8 +214,31 @@
 				console.log(articleID)
 				//跳转对应的文章详情页面
 				this.$router.push({path:'./editarticle',query:{articleID:articleID}});
+			},
+			delArticle(articleID){
+				console.log("==============获取删除文章的id==============");
+				console.log(articleID);
+				delArticle(articleID).then((response)=>{
+					console.log("=================返回删除文章的结果==================");
+					console.log(response);
+					var res = response.data;
+					console.log("删除状态显示：" + res.status);
+					if(res.status =="1"){
+						this.$message({
+							showClose:true,
+							message:'删除文章失败',
+							type:'warning'
+						})
+					}
+					else if(res.status == "2"){
+						this.$message({
+							showClose:true,
+							message:'删除文章成功',
+							type:'success'
+						})						
+					}
+				})				
 			}
-			
 		}
 	}
 </script>

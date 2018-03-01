@@ -20,6 +20,7 @@ import Layout from '../pages/Layout/Layout'
     title: 'title'               the name show in submenu and breadcrumb (recommend set)
     icon: 'svg-name'             the icon show in the sidebar,
     noCache: true                if fasle ,the page will no be cached(default is false)
+	isMenu: false                设置路由在菜单中是否显示
   }
 **/
 
@@ -39,8 +40,8 @@ export const constantRouterMap = [
 			name:'dashboard',
 			meta:{title:'dashboard', icon:'el-icon-location',noCache:true}			
 		}]
-	}
-	
+	},
+	{path:'/articlepage', component:_import('articlePage/index'),hidden:true},	
 ]
 
 export default new Router({
@@ -147,7 +148,9 @@ export const asyncRouterMap = [
 				meta:{
 					title:'editarticle',
 					icon:'el-icon-documents',
-				}		
+					isMenu:true
+				},
+				
 			},
 			{
 				path:'listarticle',

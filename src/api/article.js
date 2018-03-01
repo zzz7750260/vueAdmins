@@ -45,3 +45,15 @@ export function updataAricle(articleParams){
 		data
 	})	
 } 
+
+//删除文章
+export function delArticle(theParams){
+	var data = {
+		articleID:theParams
+	}
+	return request({
+		url:'./users/delArticle',
+		method:'post',
+		data		
+	})
+}
