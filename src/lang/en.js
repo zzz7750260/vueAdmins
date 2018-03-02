@@ -29,6 +29,7 @@ export default{
 		all:'ALL',
 		published:'Published',
 		draft:'Draft',
+		check:'Check',
 		edit:'Edit',
 		delete:'Delete',
 	}

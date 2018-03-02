@@ -30,6 +30,7 @@ export default{
 		all:'全部',
 		published:'公开',
 		draft:'草稿',
+		check:'查看',
 		edit:'编辑',
 		delete:'删除',
 	}

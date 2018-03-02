@@ -76,13 +76,18 @@
 				
 				<el-table-column
 					v-bind:label="$t('table.actions')"
-					width="180"
+					width="215"
 				>	
 					<template slot-scope="scope">
 						{{scope.row.articleID}}
 						<el-button type="primary" size="mini" @click="editArticle(scope.row.articleID)">
 							{{$t('table.edit')}}
 						</el-button>
+						
+						<el-button type="success" size="mini" @click="checkArticle(scope.row.articleID)">
+							{{$t('table.check')}}
+						</el-button>
+						
 						<el-button type="danger" size="mini" @click="delArticle(scope.row.articleID)">
 							{{$t('table.delete')}}
 						</el-button>
@@ -214,6 +219,13 @@
 				console.log(articleID)
 				//跳转对应的文章详情页面
 				this.$router.push({path:'./editarticle',query:{articleID:articleID}});
+			},
+			
+			checkArticle(articleID){
+				console.log("==============该文章的id=============");
+				console.log(articleID)
+				//跳转对应的文章详情页面			
+				this.$router.push({path:'../articlepage',query:{articleID:articleID}})
 			},
 			delArticle(articleID){
 				console.log("==============获取删除文章的id==============");

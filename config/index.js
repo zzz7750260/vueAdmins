@@ -22,7 +22,13 @@ module.exports = {
 		},
 		'/users/**':{
 			target:'http://localhost:3000',
-		}			
+		},
+		'/web':{
+			target:'http://localhost:3000',
+		},
+		'/web/**':{
+			target:'http://localhost:3000',
+		},		
 	},
 
     // Various Dev Server settings
